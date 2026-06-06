@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bootstrap demo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --cream: #f5edd8;
+      --warm: #ead9b5;
+      --brown-dark: #2c1a0e;
+      --brown-middle: #5c3a1e;
+      --brown-light: #a0714f;
+      --gold: #c8963a;
+      --gold-light: #e8b96a;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--cream);
+      background-image: radial-gradient(ellipse at 20% 10%, rgba(200, 150, 58, .13) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 90%, rgba(92, 58, 30, .10) 0%, transparent 50%);
+      font-family: 'Lato', sans-serif;
+    }
+
+    .logo-ring {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid var(--gold);
+      box-shadow: 0 0 0 6px rgba(200, 150, 58, .15), 0 12px 40px rgba(44, 26, 14, .25);
+    }
+
+    .logo-fallback {
+      width: 100%;
+      height: 100%;
+      background: var(--brown-dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-family: 'Playfair Display', serif;
+    }
+
+    .logo-fallback .ps-big {
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .logo-fallback .ps-small {
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: var(--gold-light);
+      margin-top: 3px;
+    }
+
+    .gold-divider {
+      height: 2px;
+      width: 60px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--brown-light);
+      font-weight: 700;
+    }
+
+    /* ── LINK BUTTONS ── */
+    .link-btn {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 20px;
+      background: rgba(255, 255, 255, .55);
+      border: 1.5px solid rgba(200, 150, 58, .25);
+      border-radius: 14px;
+      text-decoration: none;
+      color: var(--brown-dark);
+      transition: transform .2s, box-shadow .2s, background .2s, border-color .2s;
+      backdrop-filter: blur(6px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .link-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(200, 150, 58, .10) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity .2s;
+    }
+
+    .link-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(44, 26, 14, .15);
+      background: rgba(255, 255, 255, .85);
+      border-color: var(--gold);
+      color: var(--brown-dark);
+    }
+
+    .link-btn:hover::before {
+      opacity: 1;
+    }
+
+    .icon-box {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: var(--brown-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background .2s;
+      font-size: 18px;
+      color: var(--gold);
+    }
+
+    .link-btn:hover .icon-box {
+      background: var(--gold);
+      color: #fff;
+    }
+
+    .link-name {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: .4px;
+      line-height: 1.2;
+    }
+
+    .link-sub {
+      font-size: 11px;
+      color: var(--brown-light);
+      margin-top: 1px;
+    }
+
+    .link-arrow {
+      color: var(--gold);
+      opacity: .6;
+      font-size: 18px;
+      transition: opacity .2s, transform .2s;
+    }
+
+    .link-btn:hover .link-arrow {
+      opacity: 1;
+      transform: translateX(3px);
+    }
+
+    /* ── MAP CARD ── */
+    #map-card {
+      border: 1.5px solid rgba(200, 150, 58, .35);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(44, 26, 14, .13);
+      animation: mapReveal .4s cubic-bezier(.22, 1, .36, 1) both;
+    }
+
+    @keyframes mapReveal {
+      from {
+        opacity: 0;
+        transform: scaleY(.92) translateY(-8px);
+        transform-origin: top;
+      }
+
+      to {
+        opacity: 1;
+        transform: scaleY(1) translateY(0);
+      }
+    }
+
+    .map-top {
+      background: var(--brown-dark);
+      padding: 12px 18px;
+    }
+
+    .map-top .map-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 13px;
+      color: var(--gold-light);
+      font-weight: 700;
+    }
+
+    .map-top .map-address {
+      font-size: 10px;
+      color: rgba(200, 150, 58, .65);
+    }
+
+    .map-close-btn {
+      background: rgba(200, 150, 58, .15);
+      border: 1px solid rgba(200, 150, 58, .3);
+      border-radius: 6px;
+      width: 28px;
+      height: 28px;
+      color: var(--gold);
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background .2s;
+    }
+
+    .map-close-btn:hover {
+      background: rgba(200, 150, 58, .3);
+    }
+
+    #map-iframe {
+      width: 100%;
+      height: 220px;
+      border: none;
+      display: block;
+      filter: sepia(20%) saturate(.85) hue-rotate(5deg);
+    }
+
+    .map-footer {
+      background: rgba(255, 255, 255, .75);
+      backdrop-filter: blur(6px);
+      padding: 10px 14px;
+    }
+
+    .btn-maps-primary {
+      background: var(--brown-dark);
+      color: var(--gold-light) !important;
+      border: none;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 8px 14px;
+      transition: transform .15s, box-shadow .15s;
+    }
+
+    .btn-maps-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(44, 26, 14, .2);
+      color: var(--gold-light);
+    }
+
+    .btn-maps-secondary {
+      background: rgba(200, 150, 58, .13);
+      border: 1px solid rgba(200, 150, 58, .4);
+      color: var(--brown-mid) !important;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 8px 14px;
+      transition: transform .15s, box-shadow .15s;
+    }
+
+    .btn-maps-secondary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(44, 26, 14, .1);
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--brown-light);
+      font-weight: 700;
+    }
+
+    /* ── FOOTER ── */
+    .page-footer {
+      font-size: 11px;
+      color: var(--brown-light);
+      letter-spacing: 1px;
+      opacity: .7;
+    }
+
+    .dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+      opacity: .5;
+    }
+
+    /* ── FADE-IN ANIMATIONS ── */
+    .fade-down {
+      animation: fadeDown .7s ease both;
+    }
+
+    @keyframes fadeDown {
+      from {
+        opacity: 0;
+        transform: translateY(-16px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .slide-up {
+      opacity: 0;
+      animation: slideUp .5s ease forwards;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .slide-up:nth-child(1) {
+      animation-delay: .12s;
+    }
+
+    .slide-up:nth-child(2) {
+      animation-delay: .20s;
+    }
+
+    .slide-up:nth-child(3) {
+      animation-delay: .28s;
+    }
+
+    .slide-up:nth-child(4) {
+      animation-delay: .36s;
+    }
+
+    .slide-up:nth-child(5) {
+      animation-delay: .44s;
+    }
+
+    .slide-up:nth-child(6) {
+      animation-delay: .52s;
+    }
+
+    .slide-up:nth-child(7) {
+      animation-delay: .60s;
+    }
+  </style>
+</head>
+
+<body class="pw-5 px-3">
+  <div class="container" style="max-width: 420px;">
+
+    <div class="text-center mb-4 fade-down">
+      <div class="logo-ring mx-auto mb-3">
+        <img src="Logo.jpeg" style="width:100%; height:100%; object-fit: cover;" alt="">
+      </div>
+      <h1 class="fw-bold text-uppercase mb-2"
+        style="font-family:'Playfair Display',serif;font-size:22px;letter-spacing:3px;color:var(--brown-dark);">
+        Puro Sabor
+      </h1>
+      <div class="gold-divider mx-auto mb-3"></div>
+      <p class="fst-italic mb-0 mx-auto"
+        style="font-family:'Playfair Display',serif;font-size:13px;color:var(--brown-light);max-width:300px;line-height:1.7;">
+        Bolos caseiros, lanches especiais, doces irresistíveis e sabores feitos para tornar o seu dia melhor! </p>
+    </div>
+    <!-- links -->
+    <p class="section-label mb-3">Fale conosco &amp; nos siga</p>
+    <div class="d-flex flex-column gap-2">
+      <!-- zap zap das crias -->
+      <a href="https://wa.me/5511956651004" target="_blank" class="link-btn slide-up">
+        <div class="icon-box"> <i class="bi bi-whatsapp"></i></div>
+        <div class="flex-grow-1">
+          <div class="link-name">WhatsApp</div>
+          <div class="link-sub">Fale com a gente!</div>
+        </div>
+        <i class="bi bi-chevron-right link-arrow"></i>
+      </a>
+      <!-- Instagrammmmmmmm -->
+      <a href="https://www.instagram.com/purosaborcafeecia?igsh=aXByazRsMXNxbTlt" target="_blank"
+        class="link-btn slide-up">
+        <div class="icon-box"> <i class="bi bi-instagram"></i></div>
+        <div class="flex-grow-1">
+          <div class="link-name">Instagram</div>
+          <div class="link-sub">Siga nosso perfil!</div>
+        </div>
+        <i class="bi bi-chevron-right link-arrow"></i>
+      </a>
+      <!-- Facebook das vó -->
+      <a href="https://www.facebook.com/profile.php?id=100075968572791&mibextid=wwXIfr" target="_blank"
+        class="link-btn slide-up">
+        <div class="icon-box"> <i class="bi bi-facebook"></i></div>
+        <div class="flex-grow-1">
+          <div class="link-name">Facebook</div>
+          <div class="link-sub">Siga nossa página!</div>
+        </div>
+        <i class="bi bi-chevron-right link-arrow"></i>
+      </a>
+      <!-- ifood caro demaise -->
+      <a href="https://www.ifood.com.br/delivery/cotia-sp/puro-sabor-cafe-jardim-do-rio-cotia/b79adc62-0073-4618-a5ae-4fbc7436e18c?utm_medium=share"
+        target="_blank" class="link-btn slide-up">
+        <div class="icon-box"> <i class="bi bi-bag-heart-fill"></i></div>
+        <div class="flex-grow-1">
+          <div class="link-name">iFood</div>
+          <div class="link-sub">Peça pelo app!</div>
+        </div>
+        <i class="bi bi-chevron-right link-arrow"></i>
+      </a>
+      <!-- localization!!!!!!!!!!! toggle -->
+      <a href="https://share.google/18ALsyK1ITekqSjPu" target="_blank" class="link-btn slide-up" id="loc-btn"
+        onclick="toggleMap(event)">
+        <div class="icon-box"> <i class="bi bi-geo-alt-fill"></i></div>
+        <div class="flex-grow-1">
+          <div class="link-name">Localização</div>
+          <div class="link-sub">Ver no mapa</div>
+        </div>
+        <i class="bi bi-chevron-right link-arrow" id="loc-arrow"></i>
+      </a>
+      <!-- Mapasito -->
+      <div class="slide-up" id="map-card" style="display: none;">
+        <div class="map-top d-flex align-items-center justify-content-between gap-3">
+          <div class="d-flex alignt-items-center gap-2">
+            <i class="bi bi-geo-alt-fill" style="color: var(--gold);font-size: 16px;"></i>
+            <div>
+              <div class="map-title">Puro Sabor Café &amp; Cia</div>
+              <div class="map-address" id="map-address-label">—</div>
+
+            </div>
+          </div>
+          <button class="map-close-btn" onclick="closeMap()"><i class="bi bi-x"></i></button>
+        </div>
+        <!-- Frame -->
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.0241345024374!2d-46.88481952466862!3d-23.60346737877089!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cfab4be8da9c03%3A0x22e82b7cbfab69da!2sPuro%20Sabor%20Caf%C3%A9%20%26%20Cia!5e0!3m2!1spt-BR!2sbr!4v1780772413202!5m2!1spt-BR!2sbr"
+          width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <!-- Ações -->
+        <div class="map-footer d-flex gap-2">
+          <a href="https://www.google.com/maps/search/?api=1&query=Puro+Sabor+Cafe+e+Cia" id="maps-open-btn"
+            target="_blank"
+            class="btn btn-maps-secondary flex-fill d-flex align-items-center justify-content-center gap-1">
+            <i class="bi bi-map-fill"></i> Abrir no Maps
+          </a>
+          <a href="https://www.google.com/maps/dir/?api=1&destination=-23.6034674,-46.8822446" id="route-btn"
+            target="_blank"
+            class="btn btn-maps-secondary flex-fill d-flex align-items-center justify-content-center gap-1">
+            <i class="bi bi-send-fill"></i> Como Chegar
+          </a>
+        </div>
+      </div>
+       <!-- Email -->
+      <a href="mailto:purosaborcafeecia2@gmail.com"
+        target="_blank" class="link-btn slide-up">
+        <div class="icon-box"> <i class="bi bi-envelope-fill"></i></div>
+        <div class="flex-grow-1">
+          <div class="link-name">Email</div>
+          <div class="link-sub">Mande uma mensagem para: purosaborcafeecia2@gmail.com</div>
+        </div>
+        <i class="bi bi-chevron-right link-arrow"></i>
+      </a>
+    </div>
+  </div>
+  <!-- ── FOOTER ── -->
+  <div class="text-center mt-5 page-footer">
+    <div class="d-flex justify-content-center gap-2 mb-2">
+      <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+    Puro Sabor Café &amp; Cia · Feito com ♥
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
+    <script>
+  // ─── CONFIGURAÇÃO ───────────────────────────────────────────────
+  // Troque pelo endereço real do Puro Sabor Café & Cia
+  const ENDERECO = "Puro Sabor Café, [SUA CIDADE], Brasil";
+  // ────────────────────────────────────────────────────────────────
+
+  let mapLoaded = false;
+
+  function toggleMap(e) {
+    e.preventDefault();
+    const card = document.getElementById('map-card');
+    const isOpen = card.style.display !== 'none';
+    isOpen ? closeMap() : openMap();
+  }
+
+  function openMap() {
+    const card = document.getElementById('map-card');
+    card.style.display = 'block';
+
+    if (!mapLoaded) {
+      const encoded = encodeURIComponent(ENDERECO);
+      document.getElementById('map-iframe').src =
+        `https://maps.google.com/maps?q=${encoded}&output=embed&hl=pt-BR&z=16`;
+      document.getElementById('map-address-label').textContent = ENDERECO;
+      document.getElementById('maps-open-btn').href =
+        `https://www.google.com/maps/search/?api=1&query=${encoded}`;
+      document.getElementById('route-btn').href =
+        `https://www.google.com/maps/dir/?api=1&destination=${encoded}`;
+      mapLoaded = true;
+    }
+
+    document.getElementById('loc-sub').textContent = 'Fechar mapa';
+    document.getElementById('loc-arrow').className = 'bi bi-chevron-up link-arrow';
+
+    setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 80);
+  }
+
+  function closeMap() {
+    document.getElementById('map-card').style.display = 'none';
+    document.getElementById('loc-sub').textContent = 'Ver no mapa';
+    document.getElementById('loc-arrow').className = 'bi bi-chevron-right link-arrow';
+  }
+</script>
+</body>
+
+</html>
